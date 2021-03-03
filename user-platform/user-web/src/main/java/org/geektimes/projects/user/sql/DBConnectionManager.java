@@ -24,8 +24,9 @@ public class DBConnectionManager {
         String databaseURL = "jdbc:derby:/db/user-platform;create=true";
         Connection connection = null;
         try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             connection = DriverManager.getConnection(databaseURL);
-        } catch (SQLException pThrowables) {
+        } catch (Exception pThrowables) {
             pThrowables.printStackTrace();
         }
         return connection;
@@ -74,16 +75,16 @@ public class DBConnectionManager {
 
         Statement statement = connection.createStatement();
         // 删除 users 表
-        System.out.println(statement.execute(DROP_USERS_TABLE_DDL_SQL)); // false
-        // 创建 users 表
-        System.out.println(statement.execute(CREATE_USERS_TABLE_DDL_SQL)); // false
+//        System.out.println(statement.execute(DROP_USERS_TABLE_DDL_SQL)); // false
+//        // 创建 users 表
+//        System.out.println(statement.execute(CREATE_USERS_TABLE_DDL_SQL)); // false
 //        System.out.println(statement.executeUpdate(INSERT_USER_DML_SQL));  // 5
-        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_DML_SQL2);
-        preparedStatement.setString(1,"张三");
-        preparedStatement.setString(2,"123");
-        preparedStatement.setString(3,"111@qq.com");
-        preparedStatement.setString(4,"1588888888");
-        System.out.println(preparedStatement.execute());
+//        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_DML_SQL2);
+//        preparedStatement.setString(1,"张三");
+//        preparedStatement.setString(2,"123");
+//        preparedStatement.setString(3,"111@qq.com");
+//        preparedStatement.setString(4,"1588888888");
+//        System.out.println(preparedStatement.execute());
 
         // 执行查询语句（DML）
         ResultSet resultSet = statement.executeQuery("SELECT id,name,password,email,phoneNumber FROM users");

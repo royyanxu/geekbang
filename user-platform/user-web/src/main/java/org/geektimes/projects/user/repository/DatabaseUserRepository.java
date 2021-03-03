@@ -59,7 +59,8 @@ public class DatabaseUserRepository implements UserRepository {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPhoneNumber());
-            result = preparedStatement.execute();
+            preparedStatement.execute();
+            result = true;
         } catch (SQLException pThrowables) {
             pThrowables.printStackTrace();
             result = false;
@@ -187,7 +188,7 @@ public class DatabaseUserRepository implements UserRepository {
                 // Boolean -> boolean
                 String methodName = preparedStatementMethodMappings.get(argType);
                 Method method = PreparedStatement.class.getMethod(methodName, wrapperType);
-                method.invoke(preparedStatement, i + 1, args);
+                method.invoke(preparedStatement, i + 1, arg);
             }
             ResultSet resultSet = preparedStatement.executeQuery();
             // 返回一个 POJO List -> ResultSet -> POJO List
@@ -195,6 +196,8 @@ public class DatabaseUserRepository implements UserRepository {
             return function.apply(resultSet);
         } catch (Throwable e) {
             exceptionHandler.accept(e);
+        }finally {
+            dbConnectionManager.releaseConnection();
         }
         return null;
     }

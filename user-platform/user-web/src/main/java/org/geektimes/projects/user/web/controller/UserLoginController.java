@@ -40,6 +40,7 @@ public class UserLoginController implements PageController {
             request.getSession().setAttribute("user", user);
             return "index.jsp";
         } else {
+            request.setAttribute("errorMsg", "账号密码错误");
             return "login-form.jsp";
         }
     }

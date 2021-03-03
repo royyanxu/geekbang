@@ -27,14 +27,12 @@ public class UserRegisterController implements PageController {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
-        String repeatPassword = request.getParameter("repeatPassword");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         if (StringUtils.isBlank(name)) return "用户名不能为空";
         if (StringUtils.isBlank(password)) return "密码不能为空";
         if (StringUtils.isBlank(email)) return "电子邮箱不能为空";
         if (StringUtils.isBlank(phoneNumber)) return "手机号不能为空";
-        if (StringUtils.equals(password, repeatPassword)) return "密码不一致请重新输入";
         if (mUserService.register(new User(name, password, email, phoneNumber))) {
             return "login-form.jsp";
         }

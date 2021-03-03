@@ -1,0 +1,4 @@
+user-platform/.idea/
+*.iml
+user-platform/user-web/target/
+user-platform/my-web-mvc/target/

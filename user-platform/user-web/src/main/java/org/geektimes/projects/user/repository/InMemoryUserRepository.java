@@ -14,15 +14,21 @@ public class InMemoryUserRepository implements UserRepository {
 
     private Map<Long, User> repository = new ConcurrentHashMap<>();
 
+
+
     @Override
     public boolean save(User user) {
         return repository.put(user.getId(), user) == null;
     }
 
+
+
     @Override
     public boolean deleteById(Long userId) {
         return repository.remove(userId) != null;
     }
+
+
 
     @Override
     public boolean update(User user) {
@@ -30,10 +36,14 @@ public class InMemoryUserRepository implements UserRepository {
         return true;
     }
 
+
+
     @Override
     public User getById(Long userId) {
         return repository.get(userId);
     }
+
+
 
     @Override
     public User getByNameAndPassword(String userName, String password) {
@@ -44,6 +54,19 @@ public class InMemoryUserRepository implements UserRepository {
                 .findFirst()
                 .get();
     }
+
+
+
+    @Override
+    public User getByName(String userName) {
+        return repository.values()
+                .stream()
+                .filter(user -> Objects.equals(userName, user.getName()))
+                .findFirst()
+                .get();
+    }
+
+
 
     @Override
     public Collection<User> getAll() {

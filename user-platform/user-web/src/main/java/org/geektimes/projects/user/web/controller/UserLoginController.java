@@ -16,28 +16,31 @@ import javax.ws.rs.Path;
  * 输出 “Hello,World” Controller
  */
 @Path("/user")
-public class UserRegisterController implements PageController {
+public class UserLoginController implements PageController {
     UserService mUserService = new UserServiceImpl();
 
 
 
     @GET
     @POST
-    @Path("/register")
+    @Path("/login")
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Throwable {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
-        String repeatPassword = request.getParameter("repeatPassword");
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        if (StringUtils.isBlank(name)) return "用户名不能为空";
-        if (StringUtils.isBlank(password)) return "密码不能为空";
-        if (StringUtils.isBlank(email)) return "电子邮箱不能为空";
-        if (StringUtils.isBlank(phoneNumber)) return "手机号不能为空";
-        if (StringUtils.equals(password, repeatPassword)) return "密码不一致请重新输入";
-        if (mUserService.register(new User(name, password, email, phoneNumber))) {
+        if (StringUtils.isBlank(name)) {
+            request.setAttribute("errorMsg", "用户名不能为空");
             return "login-form.jsp";
         }
-        return "register.jsp";
+        if (StringUtils.isBlank(password)) {
+            request.setAttribute("errorMsg", "密码不能为空");
+            return "login-form.jsp";
+        }
+        User user = mUserService.queryUserByNameAndPassword(name, password);
+        if (user != null) {
+            request.getSession().setAttribute("user", user);
+            return "index.jsp";
+        } else {
+            return "login-form.jsp";
+        }
     }
 }

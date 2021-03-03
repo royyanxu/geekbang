@@ -2,3 +2,6 @@ user-platform/.idea/
 *.iml
 user-platform/user-web/target/
 user-platform/my-web-mvc/target/
+user-platform/user-web/.flattened-pom.xml
+user-platform/my-web-mvc/.flattened-pom.xml
+user-platform/.flattened-pom.xml

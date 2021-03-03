@@ -68,6 +68,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryUserByNameAndPassword(String name, String password) {
-        return null;
+        return mUserRepository.getByNameAndPassword(name,password);
     }
 }

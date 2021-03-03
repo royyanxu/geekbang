@@ -5,3 +5,4 @@ user-platform/my-web-mvc/target/
 user-platform/user-web/.flattened-pom.xml
 user-platform/my-web-mvc/.flattened-pom.xml
 user-platform/.flattened-pom.xml
+user-platform/derby.log
